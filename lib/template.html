@@ -5,21 +5,13 @@
 {% endif %}
 
 {% assign seo_site_title = site.title | default: site.name %}
+{% assign seo_page_title = page.title | default: seo_site_title %}
+{% assign seo_title = page.title | default: seo_site_title %}
 
-{% if page.title %}
-  {% assign seo_title = page.title %}
-  {% assign seo_page_title = page.title %}
-
-  {% if seo_site_title %}
-    {% assign seo_title = seo_title | append:" - " | append: seo_site_title %}
-  {% endif %}
-{% elsif seo_site_title %}
-  {% assign seo_title = seo_site_title %}
-  {% assign seo_page_title = seo_site_title %}
-
-  {% if site.description %}
-    {% assign seo_title = seo_title | append:" - " | append: site.description %}
-  {% endif %}
+{% if page.title and seo_site_title %}
+  {% assign seo_title = page.title | append:" | " | append: seo_site_title %}
+{% elsif site.description and seo_site_title %}
+  {% assign seo_title = seo_site_title | append:" | " | append: site.description %}
 {% endif %}
 
 {% if page.seo and page.seo.name %}
@@ -98,7 +90,7 @@
 {% endif %}
 
 {% if page.image %}
-  {% assign seo_page_image = page.image.path | default: page.image.facebook | default: page.image %}
+  {% assign seo_page_image = page.image.path | default: page.image.facebook | default: page.image.twitter | default: page.image %}
   {% unless seo_page_image contains "://" %}
     {% assign seo_page_image = seo_page_image | absolute_url %}
   {% endunless %}
@@ -132,17 +124,14 @@
 {% endif %}
 
 {% if seo_page_image %}
-<meta property="og:image" content="{{ seo_page_image }}" />
+
+  <meta property="og:image" content="{{ seo_page_image }}" />
   {% if page.image.height %}
     <meta property="og:image:height" content="{{ page.image.height }}" />
   {% endif %}
   {% if page.image.width %}
     <meta property="og:image:width" content="{{ page.image.width }}" />
   {% endif %}
-{% endif %}
-
-{% if page.image.twitter %}
-  <meta name="twitter:image" content="{{ page.image.twitter | absolute_url }}" />
 {% endif %}
 
 {% if page.date %}
