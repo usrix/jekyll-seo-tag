@@ -90,7 +90,9 @@
 {% endif %}
 
 {% if page.image %}
+  {% assign img_path = "/assets/images/768/" %}
   {% assign seo_page_image = page.image.path | default: page.image.facebook | default: page.image.twitter | default: page.image %}
+  {% assign seo_page_imag = img_path | append: seo_page_image %}
   {% unless seo_page_image contains "://" %}
     {% assign seo_page_image = seo_page_image | absolute_url %}
   {% endunless %}
