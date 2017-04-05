@@ -96,7 +96,7 @@
   {% unless seo_page_image contains "://" %}
     {% assign seo_page_image = seo_page_image | absolute_url %}
   {% endunless %}
-  {% assign seo_page_image = full_path | escape %}
+  {% assign seo_page_image = full_path | absolute_url | escape %}
 {% endif %}
 
 {% if seo_tag.title and seo_title %}
